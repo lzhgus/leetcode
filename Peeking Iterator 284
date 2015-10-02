@@ -1,0 +1,27 @@
+给定迭代器类接口， 包含方法： next() 和 hasNext() 
+设计并实现一个PeekingInterator 支持peek()
+
+考虑预先获取， 需要缓存flag
+
+class PeekingIterator(object):
+  def __init__(self,iterator):
+    self.iter = iterator
+    self.nextFlag = False
+    self.nextElement = None
+    
+  def peek(self):
+    if not self.nextFlag:
+      self.nextElement = self.iter.next()
+      self.nextFlag = True
+    return self.nextElement
+  
+  def next(self):
+    if not self.nextFlag:
+      return self.iter.next()
+    nextElement = self.nextElement
+    self.nextFlag = False
+    self.nextElement = None
+    return nextElement
+    
+  def hasNext(self):
+    return self.nextFlag or self.iter.hasNext()
