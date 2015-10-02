@@ -1,0 +1,28 @@
+'''
+Given an array nums containing n + 1 integers where each integer is between 1 and n (inclusive), prove that at least one duplicate number must exist. Assume that there is only one duplicate number, find the duplicate one.
+
+Note:
+You must not modify the array (assume the array is read only).
+You must use only constant, O(1) extra space.
+Your runtime complexity should be less than O(n2).
+There is only one duplicate number in the array, but it could be repeated more than once.
+'''
+
+二分查找 + 鸽笼原理
+1. 不允许修改数组，常数空间复杂度， 意味着 禁止排序， 并且不能用map等数据结构
+2. 小于O(n^2) 可以联想到 二分法 化简 n到logn
+3. 根据鸽笼原理， 给定n+1个范围【1，n】，可以确定一定存在数字至少出现过两次
+
+python:
+
+class Solution(object):
+  def findDuplicate(self,nums):
+    low,high=1, len(nums)-1 // 根据鸽笼原理， 给定n+1个范围【1，n】的整数
+    where low<=high:
+      mid = (low+high) >> 1
+      cnt = sum(x<=mid for x in nums)
+      if cnt>mid:
+        high=mid-1
+      else:
+        low=mid+1
+    return low 
