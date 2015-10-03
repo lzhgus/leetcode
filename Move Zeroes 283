@@ -1,0 +1,26 @@
+Given an array nums, write a function to move all 0's to the end of it while maintaining the relative order of the non-zero elements.
+
+For example, given nums = [0, 1, 0, 3, 12], after calling your function, nums should be [1, 3, 12, 0, 0].
+
+Note:
+You must do this in-place without making a copy of the array.
+Minimize the total number of operations.
+
+1. 不要复制数组 则没有 map等的引入
+2. 最小化操作总数， 则时间复杂度最低
+
+指针问题
+使用两个指针 x 和 y， y=0
+利用x遍历nums
+如果nums【x】非0， 则交换nums[x]和nums[y], 并令y+1
+
+y指针指向收个0元素可能存在的位置
+便利过程中，算法保证[y,x)范围内的元素均为0
+
+class Solution(object):
+  def moveZeroes(self,nums):
+    y=0
+    for x in range(len(nums)):
+      if nums[x]:
+        nums[x],nums[y]=nums[y],nums[x]
+        y+=1
