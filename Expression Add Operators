@@ -1,0 +1,43 @@
+Given a string that contains only digits 0-9 and a target value, return all possibilities to add binary operators (not unary) +, -, or * between the digits so they evaluate to the target value.
+
+Examples: 
+"123", 6 -> ["1+2+3", "1*2*3"] 
+"232", 8 -> ["2*3+2", "2+3*2"]
+"105", 5 -> ["1*0+5","10-5"]
+"00", 0 -> ["0+0", "0-0", "0*0"]
+"3456237490", 9191 -> []
+
+返回所有可能的组合方案， 考虑DFS
+将字符串拆解为left+ operator +right 的形式， 针对left执行递归
+注意：包含前导0 的算数是无效的
+例如 00+9 获得target 9 是不正确的
+
+class Solution(object):
+  def addOperators(self, num, target):
+    def isLeadingZeros(num):
+      return num.startswith('00') or int(num) and num.startswith('0')
+    def solve(num, target, mulExpr='', mulVal=1):
+      ans=[]
+      if isLeadingZeros(num):
+        pass
+      elif int(num)*mulVal == target:
+        ans+=num+mulExpr,
+      for x in range(len(num)-1):
+        lnum, rnum = num[:x+1],num[x+1:]
+        #remove leading zeros
+        if isLeadingZeros(rnum):
+          continue
+        right, rightVal = rnum+mulExpr, int(rnum)*mulVal 
+        # +
+        for left in solve(left, target-rightVal):
+          ans+= left+'+'+right,
+        # -
+        for left in solve(left, target+rightVal):
+          ans+= left+'-'+right,
+        # *
+        for left in solve(left, target, '*'+right, rightVal):
+          ans+= left,
+      return ans
+    if not num:
+      return []
+    return solve(num, target)
