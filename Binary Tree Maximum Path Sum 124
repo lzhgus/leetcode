@@ -1,0 +1,37 @@
+Given a binary tree, find the maximum path sum.
+
+The path may start and end at any node in the tree.
+
+For example:
+Given the below binary tree,
+
+       1
+      / \
+     2   3
+ 
+
+Return 6.
+
+寻找一条路径， 这条路上的节点的和为最大， 起点和终点只要是在树内就行了。 节点值可能为负值。
+
+class Solution:
+  def maxPathSum(self, root):
+    Solution.max = -1000000
+    if root == None: return 0
+    self.maxsum(root)
+    return Solution.max
+    
+  def maxsum(self,root):
+    if root == None: return 0
+    sum = root.Val
+    lmax = 0; rmax = 0
+    if root.left:
+      lmax = self.maxsum(root.left)
+      if lmax > 0:
+        sum += lmax
+    if root.right:
+      rmax = self.maxsum(root.right)
+      if rmax > 0:
+        sum += rmax 
+    if sum > Solution.max: Solution.max = sum
+    return max(root.Val, max(root.Val+lmax, root.Val+rmax))
