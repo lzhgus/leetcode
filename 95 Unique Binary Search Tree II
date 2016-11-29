@@ -1,0 +1,18 @@
+Class Solution:
+    def generateTrees(self, n):
+        if n==0: return []
+        else: return self.dfs(1,n)
+    
+    def dfs(self, start, end):
+        if start > end: return [None]
+        res = []
+        for rootval in range(start, end+1):
+            leftTree = self.dfs(start, rootval-1)
+            rightTree = self.dfs(rootval+1, end)
+            for i in range leftTree:
+                for j in range rightTree:
+                    root = TreeNode(rootval)
+                    root.left = i
+                    root.right = j
+                    res.append(root)
+         return res 
