@@ -19,4 +19,4 @@ class Solution:
             self.preOrder(root.left, level+1, res)
             self.preOrder(root.right, level+1, res)
         
-    
+    # recursive and preOrder dfs
