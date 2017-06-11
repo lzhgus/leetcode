@@ -1,54 +1,54 @@
-class Graph:
-    def __init(self):
+ss Graph:
+    def __init__(self):
         self.nodes = []
         self.maps = {}
         
-        def getOrCreateNode(self, name):
-            if name not in self.map:
-                node = Project(name)
-                self.nodes.append(node)
-                self.map[name] = node
-            return self.map[name]
+    def getOrCreateNode(self, name):
+        if name not in self.maps:
+            node = Project(name)
+            self.nodes.append(node)
+            self.maps[name] = node
+        return self.maps[name]
 
-        def addEdge(self, fisrt, second):
-            start = Project(self.getOrCreateNode(first))
-            end = Project(self.getOrCreateNode(second))
-            start.addNeighbor(end)
-
-        deg getNodes(self):
-            return self.nodes
+    def addEdge(self, first, second):
+        start = Project(self.getOrCreateNode(first))
+        end = Project(self.getOrCreateNode(second))
+        start.addNeighbor(end)
+    def getNodes(self):
+        return self.nodes
 
 class Project:
     def __init__(self, name):
         self.children = []
-        self.map = {}
+        self.maps = {}
         self.name = name
         self.dependencies = 0
 
-        def addNeighbor(self, node):
-            if node.getName() not in self.map:
-                self.children.append(node)
-                map[node.getName()]=node
-                node.increaseDependencies()
+    def addNeighbor(self, node):
+        if node.getName() not in self.maps:
+            self.children.append(node)
+            self.maps[node.getName()]=node
+            node.increaseDependencies()
 
-        def increaseDependencies(self):
-            self.dependencies+=1
+    def increaseDependencies(self):
+        self.dependencies+=1
 
-        def decrementDependencies(self):
-            self.dependencies-=1
+    def decrementDependencies(self):
+        self.dependencies-=1
 
-        def getName(self):
-            return self.name
+    def getName(self):
+        return self.name
         
-        def getChildren(self):
-            return self.children
-    
-        def getNumberDependencies(self):
-            return self.dependencies
+    def getChildren(self):
+        return self.children
+
+    def getNumberDependencies(self):
+        return self.dependencies
 
 def findBuildOrder(projects, dependencies):
     graph = buildGraph(projects, dependencies)
-    return orderProjects(graph.getNodes())
+    print orderProject(graph.getNodes())
+    return orderProject(graph.getNodes())
 
 def buildGraph(projects, dependencies):
     graph = Graph()
@@ -62,20 +62,21 @@ def buildGraph(projects, dependencies):
     return graph
 
 def orderProject(projects):
-    order = []
+    order = [[] for i in range(len(projects))]
+    print "a"
     endOfList = addNonDependent(order, projects, 0)
 
     toBeProcessed = 0
     while toBeProcessed < len(order):
         current = order[toBeProcessed]
-        
+        print current
         if not current: return None
         children = current.getChildren()
         for child in children:
             child.drementDependencies()
-
+            
         endOfList = addNonDependent(order, children, endOfList)
-        
+    print order  
     return order
 
 
@@ -86,7 +87,6 @@ def addNonDependent(order, projects, offset):
             offset +=1
     return offset
     
-project = [a,b,c,d,e,f]
-dependencies = [[a,b],[f,b],[b,d],[f,a],[d,c]]
+project = ['a','b','c','d','e','f']
+dependencies = [['a','b'],['f','b'],['b','d'],['f','a'],['d','c']]
 findBuildOrder(project, dependencies)
-
