@@ -7,7 +7,9 @@ class BinaryTree:
 
     def __str__(self):
         return "( " + str(self.val) + " ( " + str(self.left) + " | " + str(self.right) + "))"
-
+# inOrder Traversal, next node will always be the closest node whose value is greater then current node
+# so if current node has right subtree, try to find the smallest node in the right subtree
+# if current node doesn't has right subtree, try to find the current node's first parent whose value greater than current node
 def findNext(node):
     if not node: return None
     if node.right:
