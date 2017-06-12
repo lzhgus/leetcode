@@ -15,6 +15,7 @@ class TreeNode:
 def countPathsWithSum(root, target):
     if not root: return 0
     
+    return 
     pathFromRoot = countPathsFromRoot(root, target, 0)
 
     pathOfLeft = countPathsWithSum(root.left, target)
